@@ -24,15 +24,7 @@ class UserTestingSeeder extends Seeder
             [
                 'name' => 'Lucas',
                 'email' => fake()->unique()->safeEmail()
-            ],
-            [
-                'name' => 'George',
-                'email' => fake()->unique()->safeEmail()
-            ],
-            [
-                'name' => 'Leonard',
-                'email' => fake()->unique()->safeEmail()
-            ],
+            ]
         ]);
     }
 }

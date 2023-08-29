@@ -16,23 +16,15 @@ class ProductTestingSeeder extends Seeder
         Product::insert([
             [
                 'name' => 'Television',
-                'price' => 1000
+                'price' => 5000
             ],
             [
                 'name' => 'Notebook',
-                'email' => 2099.99
+                'email' => 1500.50
             ],
             [
                 'name' => 'Cellphone',
-                'email' => 875.20
-            ],
-            [
-                'name' => 'PS5 Controller',
-                'email' => 300.79
-            ],
-            [
-                'name' => 'Mouse',
-                'email' => 15.78
+                'email' => 500.99
             ]
         ]);
     }
