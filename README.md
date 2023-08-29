@@ -23,6 +23,6 @@
     DB_USERNAME= <br>
     DB_PASSWORD= <br>
 
-- Clone the repo and inside the project folder, do the following
-
-- Run the migrations with the seed with the command `php artisan migrate:fresh --seed` 
+- Clone the repo and inside the project folder with a terminal of your choice, do the following
+    - Run `composer install`
+    - Run the migrations and the seeders with the command `php artisan migrate:fresh --seed` 
