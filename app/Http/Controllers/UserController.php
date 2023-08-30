@@ -29,4 +29,15 @@ class UserController extends Controller
 
         return response()->json(['users' => $users]);
     }
+
+    public function usersWithHighestTotalOrderValue() {
+
+        $users = User::select('users.name', DB::raw('SUM(orders.total_amount) as totalOrderValue'))
+            ->join('orders', 'users.id', '=', 'orders.user_id')
+            ->groupBy('users.id', 'users.name')
+            ->havingRaw('totalOrderValue = (SELECT MAX(totalOrderValue) FROM (SELECT SUM(total_amount) as totalOrderValue FROM orders GROUP BY user_id) as sales_table)')
+            ->get();
+
+        return response()->json(['users' => $users]);
+    }
 }
