@@ -32,7 +32,7 @@ class UserControllerTest extends TestCase
         $this->assertDatabaseCount('orders', 7);
     }
 
-    public function test_assert_query_for_most_expensive_order_from_all_users(): void
+    public function test_assert_most_expensive_order_from_all_users_asc_order(): void
     {
         $response = $this->get('/api/users/order/most-expensive');
 
