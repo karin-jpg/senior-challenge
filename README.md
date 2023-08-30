@@ -27,7 +27,7 @@
     DB_PASSWORD
 
 - Clone the repo and inside the project folder with a terminal of your choice, do the following
-    - Run `composer install`
+    - Run `composer install`. This operation may take a few minutes the first time it is executed
     - Run the migrations and the seeders with the command `php artisan migrate:fresh --seed`
     - Run the application with `php artisan serve`. By default, the port is 8000 but it can be customized using `php artisan serve --port {desired-port}`, changing  {desired-port} for the one of your choice <br> <br>
 Now the application is up and its endpoints can be accessed
