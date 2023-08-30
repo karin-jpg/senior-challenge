@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::get('/users/order/most-expensive', [UserController::class, 'mostExpensiveOrder']);
+Route::get('/users/purchased-all-products', [UserController::class, 'usersWhoHavePurchasedAllProducts']);
