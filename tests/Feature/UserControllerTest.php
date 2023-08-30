@@ -40,7 +40,7 @@ class UserControllerTest extends TestCase
             $json->has('users', 3)
                 ->where('users.0.mostExpensivePurchase', 15000)
                 ->where('users.0.name', 'Lucas')
-                ->where('users.1.mostExpensivePurchase', 10000)
+                ->where('users.1.mostExpensivePurchase', 15000)
                 ->where('users.1.name', 'Robert')
                 ->where('users.2.mostExpensivePurchase', 7502.5)
                 ->where('users.2.name', 'Paul')
@@ -55,6 +55,18 @@ class UserControllerTest extends TestCase
         $response->assertJson(fn (AssertableJson $json) =>
             $json->has('users', 1)
                 ->where('users.0.name', 'Robert')
+        );
+        $response->assertStatus(200);
+    }
+
+
+    public function test_retrieve_users_with_highest_total_orders(): void
+    {
+        $response = $this->get('/api/users/highest-total-orders');
+        $response->assertJson(fn (AssertableJson $json) =>
+        $json->has('users', 1)
+            ->where('users.0.name', 'Robert')
+            ->where('users.0.totalOrder', 21004.47)
         );
         $response->assertStatus(200);
     }

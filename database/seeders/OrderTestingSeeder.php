@@ -50,8 +50,8 @@ class OrderTestingSeeder extends Seeder
             [
                 'user_id' => 1,
                 'product_id' => 1,
-                'quantity' => 2,
-                'total_amount' => 10000
+                'quantity' => 3,
+                'total_amount' => 15000
             ],
             [
                 'user_id' => 1,
