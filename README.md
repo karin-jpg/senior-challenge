@@ -15,13 +15,14 @@
     - [On windows](https://www.javatpoint.com/how-to-install-composer-on-windows#:~:text=Using%20Installer&text=Under%20the%20%22Installation%20%2D%20Windows%22,install%20and%20follow%20the%20instructions.) <br>
     - [On Linux](https://operavps.com/docs/install-php-composer-in-linux/)
 - Create database <br>
+  - Enable your database of choose in the php.ini file or installit it via command line
   - After creating, remember to configure the necessary fields on .env to match your database configuration <br>
-    DB_CONNECTION=mysql <br>
-    DB_HOST=127.0.0.1 <br>
-    DB_PORT=3306 <br>
-    DB_DATABASE= <br>
-    DB_USERNAME= <br>
-    DB_PASSWORD=
+    DB_CONNECTION <br>
+    DB_HOST <br>
+    DB_PORT <br>
+    DB_DATABASE <br>
+    DB_USERNAME <br>
+    DB_PASSWORD
 
 - Clone the repo and inside the project folder with a terminal of your choice, do the following
     - Run `composer install`
@@ -30,6 +31,7 @@
 Now the application is up and it's endpoints can be accessed
 
 - PHPunit
+    - Enable SQLite on your php.ini file or installit it via command line, as the tests use a in memory sqlite database   
     - To run all the tests, just open the terminal on the project folder and run `./vendor/bin/phpunit`
 
 ## How to access the endpoints
