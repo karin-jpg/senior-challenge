@@ -42,7 +42,7 @@ class UserControllerTest extends TestCase
                 ->where('users.0.name', 'Lucas')
                 ->where('users.1.mostExpensivePurchase', 15000)
                 ->where('users.1.name', 'Robert')
-                ->where('users.2.mostExpensivePurchase', 7502.5)
+                ->where('users.2.mostExpensivePurchase', 7500)
                 ->where('users.2.name', 'Paul')
         );
         $response->assertStatus(200);
@@ -64,9 +64,11 @@ class UserControllerTest extends TestCase
     {
         $response = $this->get('/api/users/highest-total-orders');
         $response->assertJson(fn (AssertableJson $json) =>
-        $json->has('users', 1)
+        $json->has('users', 2)
             ->where('users.0.name', 'Robert')
-            ->where('users.0.totalOrderValue', 21004.47)
+            ->where('users.0.totalOrderValue', 21000)
+            ->where('users.1.name', 'Lucas')
+            ->where('users.1.totalOrderValue', 21000)
         );
         $response->assertStatus(200);
     }

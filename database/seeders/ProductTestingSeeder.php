@@ -20,11 +20,11 @@ class ProductTestingSeeder extends Seeder
             ],
             [
                 'name' => 'Notebook',
-                'email' => 1500.50
+                'price' => 1500
             ],
             [
                 'name' => 'Cellphone',
-                'email' => 500.99
+                'price' => 500
             ]
         ]);
     }

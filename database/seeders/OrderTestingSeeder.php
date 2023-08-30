@@ -28,7 +28,7 @@ class OrderTestingSeeder extends Seeder
                 'user_id' => 2,
                 'product_id' => 2,
                 'quantity' => 5,
-                'total_amount' => 7502.5
+                'total_amount' => 7500
             ],
             [
                 'user_id' => 3,
@@ -39,8 +39,8 @@ class OrderTestingSeeder extends Seeder
             [
                 'user_id' => 3,
                 'product_id' => 3,
-                'quantity' => 2,
-                'total_amount' => 1001.98
+                'quantity' => 12,
+                'total_amount' => 6000
             ]
         ];
     }
@@ -57,13 +57,13 @@ class OrderTestingSeeder extends Seeder
                 'user_id' => 1,
                 'product_id' => 2,
                 'quantity' => 3,
-                'total_amount' => 4501.5
+                'total_amount' => 4500
             ],
             [
                 'user_id' => 1,
                 'product_id' => 3,
                 'quantity' => 3,
-                'total_amount' => 1502.97
+                'total_amount' => 1500
             ]
         ];
     }
