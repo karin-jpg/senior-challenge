@@ -66,7 +66,7 @@ class UserControllerTest extends TestCase
         $response->assertJson(fn (AssertableJson $json) =>
         $json->has('users', 1)
             ->where('users.0.name', 'Robert')
-            ->where('users.0.totalOrder', 21004.47)
+            ->where('users.0.totalOrderValue', 21004.47)
         );
         $response->assertStatus(200);
     }

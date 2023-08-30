@@ -35,7 +35,7 @@ class UserController extends Controller
         $users = User::select('users.name', DB::raw('SUM(orders.total_amount) as totalOrderValue'))
             ->join('orders', 'users.id', '=', 'orders.user_id')
             ->groupBy('users.id', 'users.name')
-            ->havingRaw('totalOrderValue = (SELECT MAX(totalOrderValue) FROM (SELECT SUM(total_amount) as totalOrderValue FROM orders GROUP BY user_id) as sales_table)')
+            ->havingRaw('totalOrderValue = (SELECT SUM(o.total_amount) FROM users u JOIN orders o ON u.id = o.user_id GROUP BY u.id ORDER BY SUM(o.total_amount) DESC LIMIT 1)')
             ->get();
 
         return response()->json(['users' => $users]);
