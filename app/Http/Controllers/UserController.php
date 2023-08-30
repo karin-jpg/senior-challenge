@@ -26,5 +26,7 @@ class UserController extends Controller
             ->groupBy('users.id')
             ->havingRaw('COUNT(DISTINCT products.id) = (select COUNT(id) FROM products)')
             ->get();
+
+        return response()->json(['users' => $users]);
     }
 }
