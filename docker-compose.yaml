@@ -1,0 +1,61 @@
+version: "3.8"
+services:
+  store:
+    container_name: store
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    expose:
+      - 9000
+    volumes:
+      - .:/usr/src/app
+      - ./public:/usr/src/app/public
+    depends_on:
+      - store_db
+    networks:
+      - store_network
+
+  store_nginx:
+    container_name: store_nginx
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    volumes:
+    - ./public:/usr/src/app/public
+    ports:
+      - 8000:80
+    depends_on:
+      - store
+    environment:
+      NGINX_FPM_HOST: store
+      NGINX_ROOT: /usr/src/app/public
+    networks:
+      - store_network
+
+  store_db:
+    container_name: store_db
+    image: mysql:8.0.20
+    restart: always
+    volumes:
+      - ./storage/db-data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: store
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_USER: manager_store
+      MYSQL_PASSWORD: store123
+    networks:
+      - store_network
+
+  # store_redis:
+  #   container_name: store_redis
+  #   image: redis:latest
+  #   ports:
+  #     - 6379:6379
+  #   networks:
+  #     - store_network
+
+networks:
+  store_network:
+    driver: bridge
