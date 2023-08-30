@@ -32,7 +32,7 @@ class UserControllerTest extends TestCase
         $this->assertDatabaseCount('orders', 7);
     }
 
-    public function test_assert_most_expensive_order_from_all_users_asc_order(): void
+    public function test_most_expensive_order_from_all_users_asc_order(): void
     {
         $response = $this->get('/api/users/order/most-expensive');
 
@@ -44,6 +44,17 @@ class UserControllerTest extends TestCase
                 ->where('users.1.name', 'Robert')
                 ->where('users.2.mostExpensivePurchase', 7502.5)
                 ->where('users.2.name', 'Paul')
+        );
+        $response->assertStatus(200);
+    }
+
+    public function test_retrieve_user_who_have_purchased_all_available_products(): void
+    {
+        $response = $this->get('/api/users/purchased-all-products');
+
+        $response->assertJson(fn (AssertableJson $json) =>
+            $json->has('users', 1)
+                ->where('users.0.name', 'Robert')
         );
         $response->assertStatus(200);
     }
