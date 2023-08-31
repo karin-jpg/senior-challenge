@@ -51,14 +51,6 @@ services:
     networks:
       - store_network
 
-  # store_redis:
-  #   container_name: store_redis
-  #   image: redis:latest
-  #   ports:
-  #     - 6379:6379
-  #   networks:
-  #     - store_network
-
 networks:
   store_network:
     driver: bridge
