@@ -38,6 +38,7 @@
     - Run `docker exec store php artisan key:generate` to generate the key to the APP_KEY value on the .env file.
     - Run `docker exec store php artisan migrate --seed` to run the migrations and seeders of the laravel application
     - After all these steps, your application will be ready and running on port 8000
+        - In case you see yourself with an error on storage/laravel.log file, run `docker exec store chown -R www-data storage` to add the permission     
 
     - PHPUnit  
       - To run all the tests, just open the terminal on the project folder and run `docker exec store ./vendor/bin/phpunit`
