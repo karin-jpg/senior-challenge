@@ -8,7 +8,9 @@
     - Composer 2.5.8
     - Laravel 10.21
     - PHPUnit 10.3.2
-    - Mysql
+    - Mysql 8.0.20
+    - Nginx 1.25.2
+      
 ### How to run the project
 - Install Docker and Docker-compose
     - [On Windows](https://docs.docker.com/desktop/install/windows-install/)
@@ -195,3 +197,8 @@
        - Inside the folder add the HTML and static files
    - Run the docker-compose commands and set up the websites
    - Restart nginx with `sudo systemctl restart nginx`
+   - References:
+       - https://ubiq.co/tech-blog/configure-multiple-host-names-nginx/
+       - https://www.learnbestcoding.com/post/15/hosting-multiple-websites-with-nginx
+       - https://www.youtube.com/watch?v=IrWFXrWAvXg&t=1s&ab_channel=Programmingin24h
+       - https://www.youtube.com/watch?v=LFrBmvgamGI&t=211s&ab_channel=AndrewSchmelyun 
