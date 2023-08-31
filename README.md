@@ -109,3 +109,23 @@
     	]
     }
 </pre>
+
+
+### Bonus - multiple instances of application inside nginx
+   - On the root folder of Nginx, edit the nginx.conf and add the code `include /etc/nginx/conf.d/*.conf;` so it can find any .conf file that we create
+   - Suppose we want to host app1.com and app2.com as example.
+   - On the folder /etc/nginx/conf.d/, create the files app1.com.conf and app2.com.conf
+   - Insert the following code inside the files, changing appx for the respective application name
+      *      server {
+                listen 80 default_server;
+                listen [::]:80 default_server;  
+                root /var/www/appx.com;  
+                index index.html;  
+                server_name appx.com www.appx.com;  	
+                location / { try_files $uri $uri/ =404;}
+            }
+   - Create folders to host the webiste files
+       - create /var/www/app1.com and /var/www/app2.com
+       - Inside the folder add the HTML and static files
+   - Run the docker-compose commands and set up the websites
+   - Restart nginx with `sudo systemctl restart nginx`
