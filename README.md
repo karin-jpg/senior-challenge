@@ -78,7 +78,26 @@
     		}
     	]
     }
-
+    
+- About the query
+    - the logic behind it: To get the user and their most expensive purchase, <br>
+      we need to select he user name, his higher purchase using the MAX function <br>
+      from the table user joining the orders table to get the total amount information. <br>
+      Then we group by user.id so we get only one row per user and order ir on desc order. <br>
+      I added a currency on select to as I believe on a production enviroment it would be a important information <br>
+    - On eloquent:
+        - User::select('users.name', DB::raw('MAX(orders.total_amount) as mostExpensivePurchase, "usd" as currency'),) <br>
+        ->join('orders', 'users.id', '=', 'orders.user_id')<br>
+        ->groupBy('users.id')<br>
+        ->orderBy('mostExpensivePurchase', 'desc')<br>
+        ->get();<br>
+    - On raw MySQL:
+        - SELECT users.name, MAX(orders.total_amount) AS mostExpensivePurchase, 'usd' AS currency <br>
+          FROM users <br>
+          INNER JOIN orders ON users.id = orders.user_id <br>
+          GROUP BY users.id <br>
+          ORDER BY mostExpensivePurchase DESC <br>
+          
 ### GET /api/users/purchased-all-products 
 - A route that returns all users that have bought all the products on the system - Example response   
 <pre>
@@ -95,7 +114,29 @@
 </pre>
     Note: As the migration uses random IDs to fill the orders table, sometimes this route can be empty. 
     If this is the case, simply run `docker exec store migrate:fresh --seed` to rerun the migrations and seeders
-    
+
+
+  - About the query
+    - the logic behind it: The objetive here is to see the users that have on the orders table, row with every id present on product. <br>
+      we select only the name of the user from the table users joining both orders and products table <br>
+      grouping by user.id and use a having statement seeing if all the distinct IDs present on the user select match <br>
+      the number of rows on the table products. If the number matchs, so the user have all the products on its order <br>
+      at leats one time <br>
+    - On eloquent:
+        - User::select('users.name') <br>
+        ->join('orders', 'users.id', '=', 'orders.user_id') <br>
+        ->join('products', 'orders.product_id', '=', 'products.id') <br>
+        ->groupBy('users.id') <br>
+        ->havingRaw('COUNT(DISTINCT products.id) = (select COUNT(id) FROM products)') <br>
+        ->get(); <br>
+    - On raw MySQL:
+        - SELECT users.name <br>
+          FROM users <br>
+          INNER JOIN orders ON users.id = orders.user_id <br>
+          INNER JOIN products ON orders.product_id = products.id <br>
+          GROUP BY users.id <br>
+          HAVING COUNT(DISTINCT products.id) = (SELECT COUNT(id) FROM products) <br>
+          
 ### GET /api/users/highest-total-orders - Example response 
 - A route that returns the user (or users if they have the same value of total order) that have the highest order value - Example response   
 <pre>
@@ -109,6 +150,31 @@
     	]
     }
 </pre>
+
+- About the query
+    - the logic behind it: The objective here is to retrieve the highest sum of total_amount value on the table orders and get all the users where their
+      sum of total_amount matchs it.
+      We begin selecting the name, totalOrderValues (sum of total_amount), the currency (for the reason I cited on the endpoint1) from the table users
+      joining the orders table grouping by user.id and user.name and adding a having clause where the totalOrderValues matchs the highest sum of
+      total_amount value on the table orders. In this way, we'll bring the user (or users if more of them have the same amount of total)
+        
+    - On eloquent:
+        - User::select('users.name', DB::raw('SUM(orders.total_amount) as totalOrderValue, "usd" as currency')) <br>
+        ->join('orders', 'users.id', '=', 'orders.user_id') <br>
+        ->groupBy('users.id', 'users.name') <br>
+        ->havingRaw('totalOrderValue = (SELECT SUM(o.total_amount) FROM users u JOIN orders o ON u.id = o.user_id GROUP BY u.id ORDER BY SUM(o.total_amount) DESC LIMIT 1)') <br>
+        ->get(); <br>
+    - On raw MySQL:
+        - SELECT users.name, SUM(orders.total_amount) AS totalOrderValue, 'usd' AS currency <br>
+            FROM users <br>
+            INNER JOIN orders ON users.id = orders.user_id <br>
+            GROUP BY users.id , users.name <br>
+            HAVING totalOrderValue = <br>
+              (SELECT SUM(o.total_amount) <br>
+                  FROM users u <br>
+                  JOIN orders o ON u.id = o.user_id <br>
+                  GROUP BY u.id <br>
+                  ORDER BY SUM(o.total_amount) DESC LIMIT 1) <br>
 
 
 ### Bonus - multiple instances of application inside nginx
