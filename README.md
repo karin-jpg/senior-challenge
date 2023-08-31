@@ -46,7 +46,7 @@
       - To run all the tests, just open the terminal on the project folder and run `docker exec store ./vendor/bin/phpunit`
 
 ## How to access the endpoints
-   - Now that the application is running, you can access the endpoints directly on the browser or using an api test tool like [postman](https://www.postman.com/) or [insomnia](https://insomnia.rest/)<br>
+   - Now that the application is running, you can access the endpoints directly on the browser or using an api test tool like [postman](https://www.postman.com/) or [insomnia](https://insomnia.rest/) accessing http://localhost:8000/<b>endpoint</b> <br>
 
 ### GET /api/users/order/most-expensive
    - A route that returns all users and their most expensive order - Example response
