@@ -19,7 +19,7 @@
     
     - This documentation is for downloading the docker desktop that reduces the time spent on complex setups so you can focus on the code
 
-- Make sure that the port 8000 and 3308 are not being used by other processes/programs, as these are the default port for the code application and the MySQL database, respectively
+- Make sure that ports 8000 and 3308 are not being used by other processes/programs, as these are the default ports for the code application and the MySQL database, respectively
 
 - Clone the repo and do the following:
     - Run `docker-compose up -d` in a terminal on the root of the project folder. The `docker-compose up` will set up the containers and the `-d` flag will make them run in the background.
@@ -82,11 +82,11 @@
     }
     
 - About the query
-    - the logic behind it: To get the user and their most expensive purchase, <br>
-      we need to select he user name, his higher purchase using the MAX function <br>
-      from the table user joining the orders table to get the total amount information. <br>
-      Then we group by user.id so we get only one row per user and order ir on desc order. <br>
-      I added a currency on select to as I believe on a production enviroment it would be a important information <br>
+    - The logic behind it: To get the user and their most expensive purchase, <br>
+      we need to select the user name, and his higher purchase using the MAX function <br>
+      from the table user joins the orders table to get the total amount of information. <br>
+      Then we group by user.id so we get only one row per user and order it on desc order. <br>
+      I added a currency on select to as I believe in a production environment it would be important information <br>
     - On eloquent:
         - User::select('users.name', DB::raw('MAX(orders.total_amount) as mostExpensivePurchase, "usd" as currency'),) <br>
         ->join('orders', 'users.id', '=', 'orders.user_id')<br>
@@ -119,11 +119,11 @@
 
 
   - About the query
-    - the logic behind it: The objetive here is to see the users that have on the orders table, row with every id present on product. <br>
-      we select only the name of the user from the table users joining both orders and products table <br>
-      grouping by user.id and use a having statement seeing if all the distinct IDs present on the user select match <br>
-      the number of rows on the table products. If the number matchs, so the user have all the products on its order <br>
-      at leats one time <br>
+    - The logic behind it: The objective here is to see the users that have on the orders table, a row with every ID present on the product. <br>
+      We select only the name of the user from the table users joining both orders and products table <br>
+      grouping by user.id and use a having statement to see if all the distinct IDs present on the user select match <br>
+      the number of rows on the table products. If the number matches, the user has all the products on its order <br>
+      at least one time <br>
     - On eloquent:
         - User::select('users.name') <br>
         ->join('orders', 'users.id', '=', 'orders.user_id') <br>
@@ -154,10 +154,10 @@
 </pre>
 
 - About the query
-    - the logic behind it: The objective here is to retrieve the highest sum of total_amount value on the table orders and get all the users where their
-      sum of total_amount matchs it.
-      We begin selecting the name, totalOrderValues (sum of total_amount), the currency (for the reason I cited on the endpoint1) from the table users
-      joining the orders table grouping by user.id and user.name and adding a having clause where the totalOrderValues matchs the highest sum of
+    - The logic behind it: The objective here is to retrieve the highest sum of total_amount value on the table orders and get all the users where their
+      sum of total_amount matches it.
+      We begin selecting the name, totalOrderValues (sum of total_amount), and the currency (for the reason I cited on the endpoint1) from the table users
+      joining the orders table grouping by user.id and user.name and adding a having clause where the totalOrderValues matches the highest sum of
       total_amount value on the table orders. In this way, we'll bring the user (or users if more of them have the same amount of total)
         
     - On eloquent:
@@ -181,7 +181,7 @@
 
 ### Bonus - multiple instances of application inside nginx
    - On the root folder of Nginx, edit the nginx.conf and add the code `include /etc/nginx/conf.d/*.conf;` so it can find any .conf file that we create
-   - Suppose we want to host app1.com and app2.com as example.
+   - Suppose we want to host app1.com and app2.com as examples.
    - On the folder /etc/nginx/conf.d/, create the files app1.com.conf and app2.com.conf
    - Insert the following code inside the files, changing appx for the respective application name
       *      server {
@@ -192,7 +192,12 @@
                 server_name appx.com www.appx.com;  	
                 location / { try_files $uri $uri/ =404;}
             }
-   - Create folders to host the webiste files
+   - On this file, you can also add another param inside the server brackets, the [worker_connections](https://nginx.org/en/docs/ngx_core_module.html#worker_connections), that represents the maximum of connections each worker can handle
+   - On websites with higher traffic, you may get a “worker connections not enough” error. This can be fixed by increasing the param, for example, `worker_connections 2048;`
+   - The max worker connections are defined by the amount of memory available on the server
+   - We can also alter the [worker_process](https://nginx.org/en/docs/ngx_core_module.html#worker_processes), each capable of processing a large number of simultaneous connections
+   - The number of NGINX worker processes (the default is 1). In most cases, running one worker process per CPU core works well, and we recommend setting this directive to auto to achieve that. There are times when you may want to increase this number, such as when the worker processes have to do a lot of disk I/O.
+   - Create folders to host the website files
        - create /var/www/app1.com and /var/www/app2.com
        - Inside the folder add the HTML and static files
    - Run the docker-compose commands and set up the websites
