@@ -203,6 +203,8 @@
    - Run the docker-compose commands and set up the websites
    - Restart nginx with `sudo systemctl restart nginx`
    - References:
+       - https://nginx.org/en/docs/ngx_core_module.html#worker_connections 
+       - https://nginx.org/en/docs/ngx_core_module.html#worker_processes
        - https://ubiq.co/tech-blog/configure-multiple-host-names-nginx/
        - https://www.learnbestcoding.com/post/15/hosting-multiple-websites-with-nginx
        - https://www.youtube.com/watch?v=IrWFXrWAvXg&t=1s&ab_channel=Programmingin24h
