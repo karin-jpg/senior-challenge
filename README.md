@@ -139,7 +139,7 @@
           GROUP BY users.id <br>
           HAVING COUNT(DISTINCT products.id) = (SELECT COUNT(id) FROM products) <br>
           
-### GET /api/users/highest-total-orders - Example response 
+### GET /api/users/highest-total-orders 
 - A route that returns the user (or users if they have the same value of total order) that have the highest order value - Example response   
 <pre>
     {
