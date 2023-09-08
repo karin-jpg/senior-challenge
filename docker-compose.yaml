@@ -35,7 +35,7 @@ services:
   store_db:
     container_name: store_db
     image: mysql:8.0.20
-    platform: linux/x86_64
+    platform: linux/x86_64/v8
     restart: always
     volumes:
       - ./storage/db-data:/var/lib/mysql
