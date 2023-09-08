@@ -34,7 +34,7 @@ services:
 
   store_db:
     container_name: store_db
-    image: mysql/mysql-server:8.0.23
+    image: mysql:8.0-oracle
     restart: always
     volumes:
       - ./storage/db-data:/var/lib/mysql
